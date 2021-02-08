@@ -8,4 +8,7 @@ My wonderful team at work is very supportive and i got the challenge and the tim
 
 I am crazy excited and this is step number one.
 
-- build the backend
+### Build a backend:
+
+- with Spring and Kotlin
+- build the typical things we need: create, read, update and delete tasks
