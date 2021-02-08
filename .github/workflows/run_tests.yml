@@ -2,9 +2,8 @@
 
 name: run-tests
 
-on:
-  pull_request:
-    branches: [ master ]
+on: pull_request
+
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
