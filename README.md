@@ -1,6 +1,6 @@
 # todo-challenge-backend
 
-##Background:
+## Background:
 I am a test automation engineer (with no coding background) I was a manual QA and developed to a testautomation Engineer for mobile apps over the years.
 I already learned some things lot but now i need to put it all together.
 
