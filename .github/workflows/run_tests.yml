@@ -4,7 +4,7 @@ name: run-tests
 
 on:
   push:
-    branches: [ workflow-run-tests ]
+    branches: [ feature/add-github-workflow-run-tests ]
   pull_request:
     branches: [ master ]
 
