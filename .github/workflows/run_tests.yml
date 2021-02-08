@@ -16,13 +16,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout code
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: set up java
+      - name: Set up java
         uses: actions/setup-java@v1
         with:
           java-version: '11' # The JDK version to make available on the path.
 
-      - name: build the app
-        run: ./gradlew clean build
+      - name: Build the app and run tests
+        run: ./gradlew clean build -d
