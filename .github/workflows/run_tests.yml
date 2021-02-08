@@ -1,0 +1,31 @@
+# This is a basic workflow to help you get started with Actions
+
+name: run-tests
+
+on:
+  push:
+    branches: [ workflow-run-tests ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+      - uses: actions/checkout@v2
+
+      - name: build the app
+      - run: ./gradlew clean build
+
+job:
+  unit tests:
+    runss-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: run unit tests
