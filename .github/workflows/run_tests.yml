@@ -17,10 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
 
       - name: build the app
-      - run: ./gradlew clean build
+        run: ./gradlew clean build
 
 job:
   run tests:
@@ -28,4 +28,4 @@ job:
     needs: [build]
     steps:
       - name: run all tests
-      - run: ./gradlew clean test
+        run: ./gradlew clean test
