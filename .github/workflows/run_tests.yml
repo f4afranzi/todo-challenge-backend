@@ -22,9 +22,8 @@ jobs:
       - name: build the app
         run: ./gradlew clean build
 
-job:
   run tests:
-    runss-on: ubuntu-latest
+    runs-on: ubuntu-latest
     needs: [build]
     steps:
       - name: run all tests
