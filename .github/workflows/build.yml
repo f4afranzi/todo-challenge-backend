@@ -14,5 +14,5 @@ jobs:
         with:
           java-version: '11' # The JDK version to make available on the path.
 
-      - name: Build the app and run tests
+      - name: Build
         run: ./gradlew clean build
