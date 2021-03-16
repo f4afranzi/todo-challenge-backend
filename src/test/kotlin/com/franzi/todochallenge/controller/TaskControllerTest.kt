@@ -9,22 +9,22 @@ import java.time.Instant
 
 internal class TaskControllerTest {
     val taskRepository = mockk<TaskRepository>()
-    val service = mockk<WhateverService>()
-    val taskController = TaskController(taskRepository, service) //.also { print("Hello") }
+    val taskController = TaskController(taskRepository) //.also { print("Hello") }
 
     @Test
     fun `successfull task creation`() {
+        // preparation
         val text = "wash"
         val task = Task(5, text, Instant.now())
         every { taskRepository.insert(text, any()) } returns task
-        every { service.printText(any())} just Runs
 
+        // action itself
         var newlyCreatedTask = taskController.createTask(TaskCreationRequestBody(text))
 
+        // verification
         val expectedText = "wash-5"
         Assertions.assertThat(newlyCreatedTask.text).isEqualTo(expectedText)
-        verify(exactly = 1) { taskRepository.insert(text, any()) }
-        verify(exactly = 1) { service.printText(expectedText)}
+        verify(exactly = 1) { taskRepository.insert(text, any()) } // verify that the mock method was invoked one time
     }
 
     //@Test

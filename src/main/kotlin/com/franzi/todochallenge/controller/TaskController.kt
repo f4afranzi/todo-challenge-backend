@@ -8,18 +8,11 @@ import java.time.Instant
 @RequestMapping("/tasks")
 class TaskController(
         private val taskRepository: TaskRepository,
-        private val service: WhateverService,
 ) {
 
     @PostMapping
     fun createTask(@RequestBody taskRequestBody: TaskCreationRequestBody): Task {
-        val task = taskRepository.insert(taskRequestBody.text, Instant.now())
-        val task2 = task.copy(text = "${task.text}-${task.id}")
-
-        service.printText(task2.text)
-
-        return task2
-//        return taskRepository.insert(taskRequestBody.text, Instant.now())
+        return taskRepository.insert(taskRequestBody.text, Instant.now())
     }
 
     @GetMapping
