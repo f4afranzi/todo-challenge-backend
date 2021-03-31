@@ -7,36 +7,35 @@ import java.time.Instant
 @Repository
 class TaskRepository {
     private val tasks = mutableListOf<Task>()
+    private val tasksMap = mutableMapOf<Int, Task>()
 
     fun findAll(): List<Task> {
-        return tasks
+        return tasksMap.toList().map { it.second }
     }
 
     fun insert(text: String, creationDate: Instant): Task  {
         val task = Task(id = tasks.size, text = text, creationDate = creationDate)
         tasks.add(task)
+        tasksMap[task.id] = task
         return task
     }
 
     fun update(id: Int, newText: String) {
-        // 1: find the target task INDEX
-        val index = tasks.indexOfFirst { it.id == id }
+        if (!tasksMap.containsKey(id)) {
+            throw RuntimeException("Item with id: $id not found") // TODO: handle it and give back a proper http response to client
+        }
 
-        // 2: create task with new text
-        val oldTask = tasks[index]
+        val oldTask = tasksMap[id]!!
         val newTask = oldTask.copy(text = newText)
+        // tasksMap[id] = tasksMap[id]!!.copy(text = newText)
 
-        // 3: delete old task
-        tasks.removeAt(index)
-
-        // 4: add new task to the list
-        tasks.add(newTask)
+        tasksMap[id] = newTask
     }
 
     fun delete(id: Int) {
-        val removed = tasks.removeIf { it.id == id }
-        if (!removed) {
+        if (!tasksMap.containsKey(id)) {
             throw RuntimeException("Item with id: $id not found") // TODO: handle it and give back a proper http response to client
         }
+        tasksMap.remove(id)
     }
 }

@@ -19,7 +19,7 @@ internal class TaskControllerTest {
         every { taskRepository.insert(text, any()) } returns task
 
         // action itself
-        var newlyCreatedTask = taskController.createTask(TaskCreationRequestBody(text))
+        var newlyCreatedTask = taskController.createTask(TaskBody(text))
 
         // verification
         val expectedText = "wash-5"
@@ -29,9 +29,9 @@ internal class TaskControllerTest {
 
     //@Test
     fun `read task successfully`() {
-        taskController.createTask( TaskCreationRequestBody("test1"))
-        taskController.createTask( TaskCreationRequestBody("test2"))
-        taskController.createTask( TaskCreationRequestBody("test3"))
+        taskController.createTask( TaskBody("test1"))
+        taskController.createTask( TaskBody("test2"))
+        taskController.createTask( TaskBody("test3"))
 
         val tasks = taskController.readTasks()
 

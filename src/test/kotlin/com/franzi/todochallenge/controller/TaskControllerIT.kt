@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 @SpringBootTest
 @AutoConfigureMockMvc
 internal class TaskControllerIT {
-    val task = TaskCreationRequestBody("testText")
+    val task = TaskBody("testText")
 
     @Autowired
     lateinit var mockMvc: MockMvc
