@@ -1,5 +1,6 @@
 package com.franzi.todochallenge.controller
 
+import com.franzi.todochallenge.repository.TaskRepository
 import org.junit.jupiter.api.Test
 
 import org.assertj.core.api.Assertions
