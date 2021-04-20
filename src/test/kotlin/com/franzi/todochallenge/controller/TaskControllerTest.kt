@@ -90,4 +90,3 @@ class TaskControllerTest {
         Assertions.assertThat(task.text).isEqualTo(task2.text)
     }
 }
-
