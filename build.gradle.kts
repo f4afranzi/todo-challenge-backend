@@ -23,6 +23,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.mockk:mockk:1.10.0")
+	testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
 tasks.withType<KotlinCompile> {
