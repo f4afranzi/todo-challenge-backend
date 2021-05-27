@@ -16,12 +16,7 @@ class TaskRepository {
     }
 
     fun findById(id: UUID): Task {
-        val task = tasksMap[id] //return tasksMap.get(id)
-        if (task == null) {
-            throw RuntimeException("Task with id: $id not found") // TODO: handle it and give back a proper http response to client
-        }
-
-        return task
+        return tasksMap[id] ?: throw RuntimeException("Task with id: $id not found") // TODO: handle it and give back a proper http response to client
     }
 
     fun insert(text: String, creationDate: Instant): Task  {
