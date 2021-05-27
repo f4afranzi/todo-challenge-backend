@@ -1,10 +1,11 @@
 package com.franzi.todochallenge.controller
 
 import com.franzi.todochallenge.repository.TaskRepository
-import io.mockk.*
-import org.assertj.core.api.Assertions
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
 import java.time.Instant
 import java.util.*
 
@@ -24,7 +25,7 @@ class TaskControllerTest {
 
         // verification
         val expectedText = "wash"
-        Assertions.assertThat(newlyCreatedTask.text).isEqualTo(expectedText)
+        assertThat(newlyCreatedTask.text).isEqualTo(expectedText)
         verify(exactly = 1) { taskRepository.insert(text, any()) } // verify that the mock method was invoked one time
     }
 
@@ -34,59 +35,38 @@ class TaskControllerTest {
         val task1 = Task(UUID.randomUUID(), "test1", Instant.now())
         val task2 = Task(UUID.randomUUID(), "test2", Instant.now())
         val task3 = Task(UUID.randomUUID(), "test3", Instant.now())
-        every { taskRepository.insert(task1.text, any()) } returns task1
-        every { taskRepository.insert(task2.text, any()) } returns task2
-        every { taskRepository.insert(task3.text, any()) } returns task3
         every { taskRepository.findAll() } returns listOf(task1, task2, task3)
 
         //action
-        taskController.createTask( TaskBody("test1"))
-        taskController.createTask( TaskBody("test2"))
-        taskController.createTask( TaskBody("test3"))
-
         val tasks = taskController.readTasks()
 
         assertThat(tasks).hasSize(3)
-        Assertions.assertThat(tasks.map { it.text }).containsExactlyInAnyOrder("test1", "test2", "test3")
+        assertThat(tasks.map { it.text }).containsExactlyInAnyOrder("test1", "test2", "test3")
+        verify(exactly = 1) { taskRepository.findAll() }
     }
 
     @Test
     fun `read task by id successfully`() {
         //prepare
-        val task1 = Task(UUID.randomUUID(), "test1", Instant.now())
         val task2 = Task(UUID.randomUUID(), "test2", Instant.now())
-        val task3 = Task(UUID.randomUUID(), "test3", Instant.now())
-        every { taskRepository.insert(task1.text, any()) } returns task1
-        every { taskRepository.insert(task2.text, any()) } returns task2
-        every { taskRepository.insert(task3.text, any()) } returns task3
         every { taskRepository.findById(task2.id) } returns task2
-        //action
-        taskController.createTask( TaskBody("test1"))
-        taskController.createTask( TaskBody("test2"))
-        taskController.createTask( TaskBody("test3"))
 
+        //action
         val task = taskController.findTaskById(task2.id)
 
-        Assertions.assertThat(task.text).isEqualTo(task2.text)
+        assertThat(task.text).isEqualTo(task2.text)
+        verify(exactly = 1) { taskRepository.findById(task2.id) }
     }
 
     @Test
     fun `update task with id successfully`() {
         //prepare
-        val task1 = Task(UUID.randomUUID(), "test1", Instant.now())
         val task2 = Task(UUID.randomUUID(), "test2", Instant.now())
-        val task3 = Task(UUID.randomUUID(), "test3", Instant.now())
-        every { taskRepository.insert(task1.text, any()) } returns task1
-        every { taskRepository.insert(task2.text, any()) } returns task2
-        every { taskRepository.insert(task3.text, any()) } returns task3
-        every { taskRepository.findById(task2.id) } returns task2
+        every { taskRepository.update(task2.id, "updatedText") } returns Unit
+
         //action
-        taskController.createTask( TaskBody("test1"))
-        taskController.createTask( TaskBody("test2"))
-        taskController.createTask( TaskBody("test3"))
+        taskController.updateTask(task2.id, TaskBody("updatedText"))
 
-        val task = taskController.findTaskById(task2.id)
-
-        Assertions.assertThat(task.text).isEqualTo(task2.text)
+        verify(exactly = 1) { taskRepository.update(task2.id, "updatedText") }
     }
 }
