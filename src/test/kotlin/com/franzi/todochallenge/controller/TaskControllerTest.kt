@@ -46,7 +46,7 @@ class TaskControllerTest {
 
         val tasks = taskController.readTasks()
 
-        assertEquals(3, tasks.size)
+        assertThat(tasks).hasSize(3)
         Assertions.assertThat(tasks.map { it.text }).containsExactlyInAnyOrder("test1", "test2", "test3")
     }
 
