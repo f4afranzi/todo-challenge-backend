@@ -11,7 +11,7 @@ internal class TaskRepositoryTest {
     private val taskRepository = TaskRepository()
 
     @Test
-    fun insertAndFind() {
+    fun `Should find all created Tasks properly`() {
         taskRepository.insert("task-01", Instant.now())
         taskRepository.insert("task-02", Instant.now())
 
@@ -21,7 +21,7 @@ internal class TaskRepositoryTest {
     }
 
     @Test
-    fun update() {
+    fun `Should update specific task correctly`() {
         val task = taskRepository.insert("task-01", Instant.now())
 
         taskRepository.update(task.id, "task-01.1")
@@ -32,7 +32,7 @@ internal class TaskRepositoryTest {
     }
 
     @Test
-    fun delete() {
+    fun `Should delete specific task`() {
         val task = taskRepository.insert("task-01", Instant.now())
 
         taskRepository.delete(task.id)

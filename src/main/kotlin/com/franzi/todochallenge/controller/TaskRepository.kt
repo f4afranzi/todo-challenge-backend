@@ -32,7 +32,7 @@ class TaskRepository {
 
     fun update(id: UUID, newText: String) {
         if (!tasksMap.containsKey(id)) {
-            throw RuntimeException("Item with id: $id not found") // TODO: handle it and give back a proper http response to client
+            throw RuntimeException("Task with id: $id not found") // TODO: handle it and give back a proper http response to client
         }
 
         val oldTask = tasksMap[id]!!
@@ -44,7 +44,7 @@ class TaskRepository {
 
     fun delete(id: UUID) {
         if (!tasksMap.containsKey(id)) {
-            throw RuntimeException("Item with id: $id not found") // TODO: handle it and give back a proper http response to client
+            throw RuntimeException("Task with id: $id not found") // TODO: handle it and give back a proper http response to client
         }
         tasksMap.remove(id)
     }
