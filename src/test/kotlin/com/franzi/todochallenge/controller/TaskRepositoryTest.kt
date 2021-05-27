@@ -2,8 +2,7 @@ package com.franzi.todochallenge.controller
 
 import com.franzi.todochallenge.repository.TaskRepository
 import org.junit.jupiter.api.Test
-
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import java.time.Instant
 
 internal class TaskRepositoryTest {
@@ -16,8 +15,8 @@ internal class TaskRepositoryTest {
         taskRepository.insert("task-02", Instant.now())
 
         val tasks = taskRepository.findAll()
-        Assertions.assertThat(tasks).hasSize(2)
-        Assertions.assertThat(tasks.map { it.text }).contains("task-01", "task-02")
+        assertThat(tasks).hasSize(2)
+        assertThat(tasks.map { it.text }).contains("task-01", "task-02")
     }
 
     @Test
@@ -27,8 +26,8 @@ internal class TaskRepositoryTest {
         taskRepository.update(task.id, "task-01.1")
 
         val tasks = taskRepository.findAll()
-        Assertions.assertThat(tasks).hasSize(1)
-        Assertions.assertThat(tasks.map { it.text }).contains("task-01.1")
+        assertThat(tasks).hasSize(1)
+        assertThat(tasks.map { it.text }).contains("task-01.1")
     }
 
     @Test
@@ -38,7 +37,7 @@ internal class TaskRepositoryTest {
         taskRepository.delete(task.id)
 
         val tasks = taskRepository.findAll()
-        Assertions.assertThat(tasks).isEmpty()
+        assertThat(tasks).isEmpty()
     }
 
 }
