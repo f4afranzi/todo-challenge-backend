@@ -26,7 +26,6 @@ internal class TaskControllerIT {
     fun `when posting a task request, task should have been created successfully`() {
         val task1 = TaskBody("testText")
         postTaskToCreate(task1)
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$.text").value(task1.text))
@@ -38,7 +37,6 @@ internal class TaskControllerIT {
         val taskCreationResponseBody = postTaskToCreate(task2).andReturn().response.contentAsString
         val id = JsonPath.parse(taskCreationResponseBody).read<String>("$.id")
         getSpecificTask(id)
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$.text").value(task2.text))
@@ -46,7 +44,6 @@ internal class TaskControllerIT {
     }
 
     private fun postTaskToCreate(task: TaskBody) = this.mockMvc.perform(post("/tasks").contentType(MediaType.APPLICATION_JSON).content(toJson(task)))
-    private fun getTasks() = this.mockMvc.perform(get("/tasks"))
     private fun getSpecificTask(id: String) = this.mockMvc.perform(get("/tasks/$id"))
 }
 
